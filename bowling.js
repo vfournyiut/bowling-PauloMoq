@@ -5,7 +5,7 @@ export class Game {
   }
 
   // Roll a ball then take in params the number of pins thrown
-  roll(pins){
+  throw(pins){
 
   }
 
@@ -16,23 +16,36 @@ export class Game {
 }
 
 export class Frame {
-  constructor(...rolls){
+  constructor(...rolls){ // ... : spread operator, on peut en mettre autant qu'on veut
     this.rolls=rolls
   }
 
-  // Add the pins to the rolls' list of the frame
-  roll(pins){}
-
   // get the score of the frame
-  score(){}
+  score(){
+    return this.rolls.reduce( (total, roll, i) => { // total : accumulateur, roll : valeur ajoutée (index dans le for)
+      i++;
+      if (i>3){
+        return total;
+      }
+      return total + roll;
+    })
+  }
 
   // To Know if the frame is finished to be played
-  isComplete(){}
+  isComplete(){
+    return (this.isStrike() || this.isSpare()) || this.rolls.length == 2;
+  }
 
   // To Know if the score of the frame have all his rolls and bonus rolls
-  isScoreComplete(){}
+  isScoreComplete(){
+    return ((!this.isStrike() && !this.isSpare() && this.rolls.length == 2) || ((this.isStrike() || this.isSpare()) && this.rolls.length >= 3));
+  }
 
-  isStrike()
+  isStrike(){
+    return (this.rolls[0] === 10)
+  }
 
-  isSpare()
+  isSpare(){
+    return (this.rolls[0] + this.rolls[1] == 10);
+  }
 }
