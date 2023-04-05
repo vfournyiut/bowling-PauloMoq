@@ -6,12 +6,30 @@ export class Game {
 
   // Roll a ball then take in params the number of pins thrown
   throw(pins){
-
+    if (this.currentFrame == 0){
+      this.frames[this.currentFrame] = new Frame(pins);
+      this.currentFrame ++;
+    }
+    else {
+      if (!this.frames[this.currentFrame - 1].isComplete()) {
+        this.frames[this.currentFrame - 1] = new Frame(this.frames[this.currentFrame - 1].rolls[0], pins);
+      }
+      else {
+        this.frames[this.currentFrame] = new Frame(pins);
+        this.currentFrame ++;
+      }
+    }
   }
 
   // Give the total score of the game
   score(){
-
+    let compt = 0;
+    for(let i; i<20; i++){
+      if (this.frames[i] != null){
+        compt++;
+      }
+    }
+    return compt;
   }
 }
 

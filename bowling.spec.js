@@ -66,7 +66,13 @@ describe('Frame', () => {
 
 describe('Game', () => {
   test('a game with no pins knocked down', () => {
-    
+    const game = new Game();
+    for(let i = 0; i<20; i++){
+      game.throw(0);
+    }
+    console.log(game.frames);
+    expect(game.frames.length).toBe(10);
+    expect(game.score()).toBe(0);
   })
 
   test('a game starting with 3 strikes', () => {
